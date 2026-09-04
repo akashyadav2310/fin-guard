@@ -2,6 +2,7 @@ package com.finguard.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class TransactionResponse {
 
@@ -16,19 +17,30 @@ public class TransactionResponse {
     private String status;
     private LocalDateTime createdAt;
 
+    private Integer riskScore;
+    private String riskLevel;
+    private String decision;
+    private List<String> riskFlags;
+
     public TransactionResponse() {
     }
 
-    public TransactionResponse(String transactionId,
-                               String customerId,
-                               String merchantId,
-                               BigDecimal amount,
-                               String currency,
-                               String channel,
-                               String deviceId,
-                               String location,
-                               String status,
-                               LocalDateTime createdAt) {
+    public TransactionResponse(
+            String transactionId,
+            String customerId,
+            String merchantId,
+            BigDecimal amount,
+            String currency,
+            String channel,
+            String deviceId,
+            String location,
+            String status,
+            LocalDateTime createdAt,
+            Integer riskScore,
+            String riskLevel,
+            String decision,
+            List<String> riskFlags) {
+
         this.transactionId = transactionId;
         this.customerId = customerId;
         this.merchantId = merchantId;
@@ -39,6 +51,10 @@ public class TransactionResponse {
         this.location = location;
         this.status = status;
         this.createdAt = createdAt;
+        this.riskScore = riskScore;
+        this.riskLevel = riskLevel;
+        this.decision = decision;
+        this.riskFlags = riskFlags;
     }
 
     public String getTransactionId() {
@@ -79,5 +95,21 @@ public class TransactionResponse {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public Integer getRiskScore() {
+        return riskScore;
+    }
+
+    public String getRiskLevel() {
+        return riskLevel;
+    }
+
+    public String getDecision() {
+        return decision;
+    }
+
+    public List<String> getRiskFlags() {
+        return riskFlags;
     }
 }
