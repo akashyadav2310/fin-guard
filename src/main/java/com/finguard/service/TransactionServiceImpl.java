@@ -10,6 +10,8 @@ import com.finguard.repository.CustomerRepository;
 import com.finguard.repository.MerchantRepository;
 import com.finguard.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
+import com.finguard.risk.RiskAssessmentService;
+import com.finguard.risk.RiskResult;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,15 +22,18 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final CustomerRepository customerRepository;
     private final MerchantRepository merchantRepository;
+    private final RiskAssessmentService riskAssessmentService;
 
     public TransactionServiceImpl(
             TransactionRepository transactionRepository,
             CustomerRepository customerRepository,
-            MerchantRepository merchantRepository) {
+            MerchantRepository merchantRepository,
+            RiskAssessmentService riskAssessmentService) {
 
         this.transactionRepository = transactionRepository;
         this.customerRepository = customerRepository;
         this.merchantRepository = merchantRepository;
+        this.riskAssessmentService = riskAssessmentService;
     }
 
     @Override
@@ -66,7 +71,10 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction savedTransaction =
                 transactionRepository.save(transaction);
 
-        return mapToResponse(savedTransaction);
+        RiskResult riskResult =
+                riskAssessmentService.assessRisk(savedTransaction);
+
+        return mapToResponse(savedTransaction, riskResult);
     }
 
     @Override
@@ -80,11 +88,15 @@ public class TransactionServiceImpl implements TransactionService {
                                         "Transaction not found: "
                                                 + transactionId));
 
-        return mapToResponse(transaction);
+        RiskResult riskResult =
+                riskAssessmentService.assessRisk(transaction);
+
+        return mapToResponse(transaction, riskResult);
     }
 
     private TransactionResponse mapToResponse(
-            Transaction transaction) {
+            Transaction transaction,
+            RiskResult riskResult) {
 
         return new TransactionResponse(
                 transaction.getTransactionId(),
@@ -96,7 +108,11 @@ public class TransactionServiceImpl implements TransactionService {
                 transaction.getDeviceId(),
                 transaction.getLocation(),
                 transaction.getStatus(),
-                transaction.getCreatedAt()
+                transaction.getCreatedAt(),
+                riskResult.getRiskScore(),
+                riskResult.getRiskLevel(),
+                riskResult.getDecision(),
+                riskResult.getFlags()
         );
     }
 }
