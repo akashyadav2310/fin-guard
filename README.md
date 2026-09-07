@@ -6,6 +6,33 @@ The project simulates how modern banks, payment gateways, and fintech companies 
 
 ---
 
+## Real-Time Transaction Risk Assessment
+
+FinGuard is designed to simulate a real-time transaction risk assessment system used in modern fintech and banking environments.
+
+In real-world payment systems, millions of transactions can be generated through channels such as UPI, credit cards, debit cards, net banking, wallets, and QR payments. Each transaction may need to be evaluated for potential risk based on factors such as transaction amount, device, location, merchant risk, and customer behavior.
+
+FinGuard follows a similar approach by evaluating a transaction as it is received and generating a risk score, risk level, risk flags, and a recommended decision.
+
+```text
+Transaction Received
+        ↓
+Transaction Validation
+        ↓
+Risk Assessment
+        ↓
+Risk Score + Risk Flags
+        ↓
+Risk Level
+        ↓
+Decision
+```
+
+The current implementation uses a rule-based risk assessment engine. Future versions will extend this architecture with transaction history, customer and merchant risk profiles, Redis caching, Kafka-based event processing, and additional risk signals to support a more realistic real-time risk assessment workflow.
+
+> Note: FinGuard is an educational/simulation project and does not process real financial transactions or move real money.
+
+
 ## Overview
 
 The system manages:
