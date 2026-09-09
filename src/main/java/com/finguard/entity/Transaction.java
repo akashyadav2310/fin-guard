@@ -1,10 +1,15 @@
 package com.finguard.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Entity
 public class Transaction {
 
+    @Id
     private String transactionId;
     private String customerId;
     private String merchantId;
