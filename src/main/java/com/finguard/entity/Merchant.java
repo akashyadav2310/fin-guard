@@ -1,9 +1,14 @@
 package com.finguard.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Merchant {
 
+    @Id
     private String merchantId;
     private String merchantName;
     private String merchantType;
