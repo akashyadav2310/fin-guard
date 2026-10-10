@@ -1,4 +1,4 @@
-CREATE TABLE transactions (
+CREATE TABLE transaction (
     transaction_id VARCHAR(255) PRIMARY KEY,
     customer_id VARCHAR(255),
     merchant_id VARCHAR(255),
