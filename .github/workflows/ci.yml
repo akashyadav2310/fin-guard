@@ -14,21 +14,17 @@ on:
 
 jobs:
   build-and-test:
-
     runs-on: ubuntu-latest
 
     services:
       postgres:
         image: postgres:16
-
         env:
           POSTGRES_DB: fin_guard
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-
         ports:
           - 5432:5432
-
         options: >-
           --health-cmd="pg_isready -U postgres"
           --health-interval=10s
@@ -36,11 +32,11 @@ jobs:
           --health-retries=5
 
     env:
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
     steps:
-
       - name: Checkout source code
         uses: actions/checkout@v4
 
